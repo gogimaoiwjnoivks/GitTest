@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="32dp"
+    android:background="#FAFAFA">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🌿 이메일 회원가입"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:textColor="#111111"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="식물원 계정을 만들고 도감을 기록해보세요"
+        android:textSize="14sp"
+        android:textColor="#666666"
+        android:layout_marginBottom="36dp"/>
+
+    <EditText
+        android:id="@+id/etRegEmail"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:hint="이메일 주소"
+        android:inputType="textEmailAddress"
+        android:background="#EAEAEA"
+        android:paddingLeft="16dp"
+        android:layout_marginBottom="12dp"/>
+
+    <EditText
+        android:id="@+id/etRegPassword"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:hint="비밀번호 (6자리 이상)"
+        android:inputType="textPassword"
+        android:background="#EAEAEA"
+        android:paddingLeft="16dp"
+        android:layout_marginBottom="12dp"/>
+
+    <EditText
+        android:id="@+id/etRegPasswordConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:hint="비밀번호 확인"
+        android:inputType="textPassword"
+        android:background="#EAEAEA"
+        android:paddingLeft="16dp"
+        android:layout_marginBottom="28dp"/>
+
+    <Button
+        android:id="@+id/btnRegisterSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:text="가입 완료하기"
+        android:backgroundTint="@android:color/holo_green_dark"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:elevation="2dp"/>
+
+</LinearLayout>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_above="@id/layoutBottomSheetButtons">
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:background="#D1D1D6"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="12dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AI 식물 도감 분석 결과 🌿"
+            android:textColor="#2C3E50"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            android:layout_marginBottom="12dp"
+            android:backgroundTint="#F2F2F7">
+
+            <ImageView
+                android:id="@+id/ivFloatingPlant"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+              />
+        </androidx.cardview.widget.CardView>
+
+        <ScrollView
+            android:id="@+id/floatingScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F8F9FA"
+            android:padding="12dp"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <TextView
+                android:id="@+id/tvFloatingResult"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="분석을 시작합니다..."
+                android:textColor="#4A4A4A"
+                android:textSize="15sp"
+                android:lineSpacingMultiplier="1.3" />
+        </ScrollView>
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btnFloatingScrollToggle"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_above="@id/layoutBottomSheetButtons"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/down"
+        android:scaleType="fitCenter"
+        android:padding="10dp"
+        android:elevation="6dp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/layoutBottomSheetButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+
+            <Button
+                android:id="@+id/btnFloatingWater"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                android:text="💧 물 주는 주기"
+                android:textColor="#007AFF"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:backgroundTint="#E1F0FF"
+                app:cornerRadius="10dp"/>
+
+            <Button
+                android:id="@+id/btnFloatingFeature"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                android:text="🌿 식물의 특징"
+                android:textColor="#4CD964"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:backgroundTint="#E8F9ED"
+                app:cornerRadius="10dp"/>
+        </LinearLayout>
+        <Button
+            android:id="@+id/btnRegisterSearchedPlant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="#2E7D32"
+            android:text="🌱 내 반려식물로 등록하기"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnFloatingClose"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:text="닫기"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#34495E"
+            app:cornerRadius="10dp"/>
+    </LinearLayout>
+</RelativeLayout>

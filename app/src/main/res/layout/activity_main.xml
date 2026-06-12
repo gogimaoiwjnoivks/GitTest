@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="#FAFAFA">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/includedTopBar"
+            layout="@layout/top_bar" />
+
+        <LinearLayout
+            android:id="@+id/bottomMenuBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:background="#FFFFFF"
+            android:elevation="8dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#EEEEEE" />
+
+            <LinearLayout
+                android:id="@+id/bottomMenuBar"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <Button
+                    android:id="@+id/menuChatbot"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="챗봇"
+                    android:textSize="12sp"
+                    android:textColor="#8E8E93"
+                    style="?android:attr/borderlessButtonStyle" />
+
+                <Button
+                    android:id="@+id/menuMyPlant"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="내 식물"
+                    android:textSize="12sp"
+                    android:textColor="#111111"
+                    style="?android:attr/borderlessButtonStyle" />
+                <Button
+                    android:id="@+id/menuMyInfo"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="내 정보"
+                    android:textSize="12sp"
+                    android:textColor="#8E8E93"
+                    style="?android:attr/borderlessButtonStyle" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/mainScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/includedTopBar"
+            android:layout_above="@id/bottomMenuBarLayout"
+            android:fillViewport="true"
+            android:scrollbars="none"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:paddingBottom="100dp">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="#EAEAEA"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="20dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="내 방의 반려식물 목록 🏡"
+                    android:textColor="#111111"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvMyPlantList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:scrollbars="none"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="2" />
+
+            </LinearLayout>
+        </ScrollView>
+
+        <FrameLayout
+            android:id="@+id/fragmentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/includedTopBar"
+            android:layout_above="@id/bottomMenuBarLayout"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnInitialAddPlant"
+            android:layout_width="wrap_content"
+            android:layout_height="46dp"
+            android:layout_above="@id/bottomMenuBarLayout"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="➕ 식물 등록"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:backgroundTint="#4CAF50"
+            android:elevation="4dp"
+            app:cornerRadius="20dp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/drawerMenu"
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:background="#FFFFFF"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="30dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:text="전체 메뉴 🌿"
+                android:textColor="#111111"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnMainLogout"
+                android:layout_width="75dp"
+                android:layout_height="36dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:backgroundTint="#888888"
+                android:text="로그아웃"
+                android:textColor="#FFFFFF"
+                android:textSize="11sp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:padding="0dp" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btnMenuNotice"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="공지사항"
+            android:gravity="start|center_vertical"
+            android:textSize="15sp"
+            android:textColor="#333333"
+            style="?android:attr/borderlessButtonStyle" />
+
+        <Button
+            android:id="@+id/btnMenuGuide"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="앱 사용 가이드"
+            android:gravity="start|center_vertical"
+            android:textSize="15sp"
+            android:textColor="#333333"
+            style="?android:attr/borderlessButtonStyle" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#EEEEEE"
+            android:layout_marginBottom="12dp"/>
+
+        <Button
+            android:id="@+id/btnMainDeleteAccount"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="#FFFFFF"
+            android:text="회원 탈퇴"
+            android:textColor="#FF4D4D"
+            android:textSize="12sp"
+            style="?android:attr/borderlessButtonStyle"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:padding="0dp" />
+    </LinearLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="32dp"
+    android:background="#FAFAFA">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🌿 내 손안의 식물원"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="#111111"
+        android:layout_marginBottom="32dp"/>
+
+    <EditText
+        android:id="@+id/etLoginEmail"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:hint="이메일 주소 입력"
+        android:inputType="textEmailAddress"
+        android:background="#EAEAEA"
+        android:paddingLeft="16dp"
+        android:layout_marginBottom="12dp"/>
+
+    <EditText
+        android:id="@+id/etLoginPassword"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:hint="비밀번호 입력"
+        android:inputType="textPassword"
+        android:background="#EAEAEA"
+        android:paddingLeft="16dp"
+        android:layout_marginBottom="20dp"/>
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:text="이메일 로그인"
+        android:backgroundTint="@android:color/holo_green_dark"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:id="@+id/tvGoToRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="아직 계정이 없으신가요? 이메일 회원가입"
+        android:textColor="#666666"
+        android:textSize="14sp"
+        android:layout_marginBottom="32dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="24dp">
+        <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" android:background="#DDDDDD"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=" 또는 " android:textColor="#999999" android:paddingHorizontal="10dp" android:textSize="12sp"/>
+        <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" android:background="#DDDDDD"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnGoogleLogin"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:text="Google 계정으로 시작하기"
+        android:textColor="#3C4043"
+        android:textStyle="bold"
+        app:backgroundTint="#FFFFFF"
+        app:strokeColor="#DDDDDD"
+        app:strokeWidth="1dp"
+        android:elevation="2dp"/>
+
+</LinearLayout>
