@@ -1,33 +1,44 @@
 plugins {
-    alias(libs.plugins.android.application)
+    // Java 프로젝트 전용 Groovy 플러그인 정석 표현
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
 }
 
 android {
     namespace 'com.example.myapplication'
-    compileSdk 34
+
+    // 💡 최신 라이브러리들의 요구 조건에 맞춰 컴파일 SDK 버전을 36으로 유지합니다.
+    compileSdk 36
 
     defaultConfig {
         applicationId "com.example.myapplication"
         minSdk 24
-        targetSdk 34
+
+        // 💡 targetSdk도 컴파일 버전과 발맞추어 36으로 안전하게 세팅합니다.
+        targetSdk 36
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-
+        // 🔒 [보안 핵심] local.properties 파일에서 구글 API 키를 안전하게 읽어오는 로직
         Properties properties = new Properties()
         if (project.rootProject.file('local.properties').exists()) {
             properties.load(project.rootProject.file('local.properties').newDataInputStream())
         }
 
-
+        // 런타임에 BuildConfig.GCP_API_KEY 라는 자바 변수로 키 값을 배달합니다.
         buildConfigField "String", "GCP_API_KEY", "\"${properties.getProperty('GCP_API_KEY')}\""
     }
 
+    // 🚀 [컴파일 옵션 활성화] 최신 안드로이드 시스템에서 BuildConfig 클래스 생성을 강제 허용
+    buildFeatures {
+        buildConfig = true
+    }
 
     buildTypes {
         release {
+            // 난독화 및 최적화 해제 옵션 (정석 표현)
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -37,14 +48,44 @@ android {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
-
-
+}
 
 dependencies {
-
+    // 안드로이드 기본 UI 라이브러리들
+    implementation libs.activity.ktx
     implementation libs.appcompat
-    implementation libs.material
     implementation libs.constraintlayout
+    implementation libs.material
 
+    // 🖼️ 이미지 로딩 라이브러리
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
+
+    // 🌿 파이어베이스 버전을 하나로 통합 관리해주는 BoM
+    implementation platform('com.google.firebase:firebase-bom:34.14.0')
+
+    // 🔥 [이메일 가입/로그인 관리] 파이어베이스 인증 라이브러리
+    implementation 'com.google.firebase:firebase-auth'
+
+    // 🔥 [구글 로그인 핵심] 플레이 서비스 인증 라이브러리
+    implementation 'com.google.android.gms:play-services-auth:21.2.0'
+
+    // 🌿 제미나이(Gemini) 식물 인식 API 통신을 담당하는 네트워크 듀오
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    implementation 'com.google.code.gson:gson:2.10.1'
+
+    // 📱 로컬 내부 SQLite DB를 제어하기 위한 Room 라이브러리
+    implementation "androidx.room:room-runtime:2.6.1"
+    annotationProcessor "androidx.room:room-compiler:2.6.1"
+
+    // ☁️ 구글 파이어베이스 원격 클라우드 DB 및 이미지 스토리지 라이브러리
+    implementation 'com.google.firebase:firebase-firestore:25.0.0'
+    implementation 'com.google.firebase:firebase-storage:21.0.0'
+
+    // 📅 [필수 체크] 식물 상태 입력 전용 커스텀 캘린더 뷰 라이브러리
+    implementation 'com.github.prolificinteractive:material-calendarview:1.4.3'
+
+    // 테스트 도구 세트
+    testImplementation libs.junit
+    androidTestImplementation libs.espresso.core
+    androidTestImplementation libs.ext.junit
 }
-    }
