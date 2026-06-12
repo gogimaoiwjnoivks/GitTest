@@ -33,10 +33,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-/**
- * 특정 식물의 물주기, 영양제 투여 이력 및 날짜별 관찰 일지 기록을 처리하는 달력 커스텀 다이얼로그 클래스입니다.
- * MaterialCalendarView의 데코레이터 패턴을 적용하여 이벤트를 시각적으로 맵핑하고, 로컬-원격 서버 동기화를 대행합니다.
- */
 public class PlantCalendarDialog {
 
     private final Context context;
@@ -60,10 +56,6 @@ public class PlantCalendarDialog {
         if (day == null) return null;
         return String.format(Locale.getDefault(), "%04d-%02d-%02d", day.getYear(), day.getMonth(), day.getDay());
     }
-
-    /**
-     * 커스텀 달력 UI를 팝업하고 비동기 일지 영속성 트랜잭션 및 스레드 제어를 핸들링하는 코어 레이아웃 렌더링 메서드입니다.
-     */
     public void show() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_plant_calendar, null);
@@ -87,7 +79,6 @@ public class PlantCalendarDialog {
             }
         });
 
-        /** Current 스레드에서 캐싱 중인 메모 폼 데이터를 해시 맵 버퍼 스토리지로 수거하는 유효 프로시저입니다. */
         Runnable captureCurrentMemo = () -> {
             CalendarDay currentSelectedDay = mcv.getSelectedDate();
             if (currentSelectedDay != null) {
@@ -187,10 +178,6 @@ public class PlantCalendarDialog {
         }
     }
 
-    /**
-     * 백그라운드 작업자 스레드 분기를 개시하여 날짜별 맵 일지 데이터를 로컬 DB에 선제 영속화하고,
-     * 원격 Firestore 스토리지 컬렉션과 양방향 트랜잭션을 체이닝 완결하는 저장 메서드입니다.
-     */
     private void saveAllDateMemos(Map<String, String> finalMemoMap, MaterialCalendarView mcv) {
         targetPlant.setDateMemoMap(finalMemoMap);
 
@@ -210,10 +197,6 @@ public class PlantCalendarDialog {
         }).start();
     }
 
-    /**
-     * 서브 루틴 팝업창을 소환하여 물주기 임계 주기를 변경하고,
-     * 상위 Material3 컴포넌트 스타일 겹침 현상을 무력화하여 강제 UI 도색 색상을 주입하는 제어 다이얼로그입니다.
-     */
     private void showSubCycleSettingDialog(MaterialCalendarView mcv) {
         AlertDialog.Builder subBuilder = new AlertDialog.Builder(context);
         subBuilder.setTitle("🗓물주기 주기 설정");
@@ -261,10 +244,6 @@ public class PlantCalendarDialog {
         }
     }
 
-    /**
-     * 달력 컴포넌트에 할당된 이전 데코레이터들을 전면 회수한 후,
-     * 최신 어레이 상태 및 해시 키셋을 기반으로 전경/배경 그래픽 및 가시 요소를 완전 재연동하는 캔버스 제어 플러시 함수입니다.
-     */
     private void refreshCalendarDecorators(MaterialCalendarView mcv) {
         mcv.removeDecorators();
 

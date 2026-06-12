@@ -1,4 +1,4 @@
-package com.example.myapplication; // ⚠️ 본인의 실제 패키지명인지 꼭 확인하세요!
+package com.example.myapplication;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.bumptech.glide.Glide; // 💡 Glide 임포트 추가
+import com.bumptech.glide.Glide;
 import java.util.List;
 
 public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.PlantViewHolder> {
@@ -48,28 +48,22 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.PlantViewHol
         Plant plant = plantList.get(position);
         holder.tvGridPlantName.setText(plant.getName());
 
-        // -------------------------------------------------------------------------
-        // 🔥 [버그 완치 핵심] 구시대적인 new Thread 스레드 지옥을 철거하고,
-        // 리사이클러뷰 뷰 재사용 버그를 완벽히 통제하는 Glide 엔진으로 전면 교체!
-        // -------------------------------------------------------------------------
         if (plant.getImageUrl() != null && !plant.getImageUrl().isEmpty() && plant.getImageUrl().startsWith("http")) {
             Glide.with(holder.itemView.getContext())
                     .load(plant.getImageUrl())
-                    .placeholder(R.drawable.white) // 로딩 중에 보여줄 임시 이미지
-                    .error(R.drawable.white)       // 로딩 실패 시 보여줄 이미지
-                    .into(holder.ivGridPlantItem);                  // 최종 목적지 뷰 지정
+                    .placeholder(R.drawable.white)
+                    .error(R.drawable.white)
+                    .into(holder.ivGridPlantItem);
         } else {
             holder.ivGridPlantItem.setImageResource(R.drawable.white);
         }
 
-        // 짧은 클릭 이벤트 연동
         holder.itemView.setOnClickListener(v -> {
             if (clickListener != null) {
                 clickListener.onPlantClick(plant, position);
             }
         });
 
-        // 롱 클릭 이벤트 연동 (getAdapterPosition 대신 안정적인 bindingAdapterPosition 적용 권장)
         holder.itemView.setOnLongClickListener(v -> {
             if (longClickListener != null) {
                 longClickListener.onPlantLongClick(plant, holder.getBindingAdapterPosition());

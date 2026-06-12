@@ -23,10 +23,6 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-/**
- * 이메일/비밀번호 기반 인증 및 Google OAuth2.0 연동 로그인을 총괄하는 액티비티 클래스입니다.
- * 세션 정보 확인을 통한 자동 로그인 및 클라이언트 보안 토큰 처리를 수행합니다.
- */
 public class LoginActivity extends AppCompatActivity {
 
     private EditText etLoginEmail;
@@ -38,10 +34,6 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
 
-    /**
-     * Google Sign-In 인텐트 요청에 대한 결과를 수신하는 컴포넌트입니다.
-     * ActivityResultLauncher 메커니즘을 적용하여 외부 인증 트랜잭션의 상태 결과를 안전하게 처리합니다.
-     */
     private final ActivityResultLauncher<Intent> googleSignInLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -65,7 +57,6 @@ public class LoginActivity extends AppCompatActivity {
         setTheme(androidx.appcompat.R.style.Theme_AppCompat_Light_NoActionBar);
         setContentView(R.layout.activity_login);
 
-        // 안드로이드 11(SDK 30) 이상 운영체제에 대응하는 전체 화면 소프트웨어 UI 구현 및 시스템 인셋 통제
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             getWindow().setDecorFitsSystemWindows(false);
             android.view.WindowInsetsController controller = getWindow().getInsetsController();
@@ -76,7 +67,6 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        // 현재 클라이언트 기기에 저장된 유효 세션 존재 여부를 검증하여 자동 로그인 전환 처리
         if (mAuth.getCurrentUser() != null) {
             Toast.makeText(this, "자동 로그인되었습니다.", Toast.LENGTH_SHORT).show();
             navigateToMainActivity();
@@ -90,7 +80,6 @@ public class LoginActivity extends AppCompatActivity {
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        // 무효화된 캐시 세션으로 인해 구글 계정 선택창 팝업이 누락되는 현상을 방지하기 위한 선제적 로그아웃 처리
         mGoogleSignInClient.signOut();
 
         etLoginEmail = findViewById(R.id.etLoginEmail);
@@ -104,9 +93,6 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        /**
-         * 이메일/비밀번호 데이터 폼 유효성 검증 및 Firebase Authentication 연동 로그인 핸들러입니다.
-         */
         btnLogin.setOnClickListener(v -> {
             String email = etLoginEmail.getText().toString().trim();
             String password = etLoginPassword.getText().toString().trim();
@@ -139,10 +125,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Google OAuth2.0 서버에서 발급된 ID 토큰을 연동하여 Firebase 백엔드 세션을 갱신하는 인증 트랜잭션 메서드입니다.
-     * @param idToken 구글 클라이언트에서 수신된 암호화 ID 토큰
-     */
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
@@ -156,9 +138,6 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    /**
-     * 인증 성공 후 메인 대시보드 화면으로 전환하며, 스택 백 버퍼 메모리를 클리어하는 내비게이션 메서드입니다.
-     */
     private void navigateToMainActivity() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);

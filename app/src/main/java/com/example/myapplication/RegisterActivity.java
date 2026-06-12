@@ -7,10 +7,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
-/**
- * 신규 유저의 이메일 크레덴셜 식별 정보를 파이어베이스 클라우드 인증 서버로 안전하게 이송하여
- * 유니크 세션 식별 아이디(UID)를 부여받는 회원가입 액티비티 컴포넌트입니다.
- */
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText etRegEmail;
@@ -32,10 +28,6 @@ public class RegisterActivity extends AppCompatActivity {
         etRegPasswordConfirm = findViewById(R.id.etRegPasswordConfirm);
         btnRegisterSubmit = findViewById(R.id.btnRegisterSubmit);
 
-        /**
-         * 입력 폼 유효성(입력 누락 체크, 패스워드 일치성, 최소 자릿수 규칙 보장)을 다각도 샌드박스 검증한 뒤,
-         * 원격 파이어베이스 서버의 회원 생성을 유발하는 데이터 전송 이벤트 리스너 구역입니다.
-         */
         btnRegisterSubmit.setOnClickListener(v -> {
             String email = etRegEmail.getText().toString().trim();
             String password = etRegPassword.getText().toString().trim();

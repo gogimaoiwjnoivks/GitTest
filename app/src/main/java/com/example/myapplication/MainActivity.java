@@ -67,10 +67,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-/**
- * 애플리케이션의 홈 화면 및 멀티 탭 화면 전환 구조를 총괄 제어하는 메인 프레임워크 클래스입니다.
- * 하드웨어 카메라/갤러리 연동, 비동기 원격 AI 분석 요청, 로컬-원격 서버 간 데이터 동기화를 연쇄 수행합니다.
- */
 public class MainActivity extends AppCompatActivity {
 
     private Button btnMainLogout;
@@ -106,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Bitmap imageBitmap;
 
-    /** 타 모듈 및 하위 바텀시트 다이얼로그 도메인에서 동적 가로채기 연동 처리를 수행하기 위한 개방형 글로벌 상태 필드입니다. */
     public String detectedPlantName = "";
     public boolean isAutoRegistrationMode = false;
 
@@ -114,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
     private int registrationClickType = 0;
     private PlantSearch plantSearch;
 
-    /** 대용량 멀티파트 이미지 업로드 및 AI 모델 토큰 통신 유실을 차단하기 위한 고성능 HTTP 클라이언트 엔진입니다. */
     private final OkHttpClient client = new OkHttpClient.Builder()
             .connectTimeout(60, TimeUnit.SECONDS)
             .readTimeout(60, TimeUnit.SECONDS)
@@ -123,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
 
     private final Gson gson = new Gson();
 
-    /** 갤러리 미디어 인텐트 반환 데이터를 수신하여 비동기 입양 워크플로우로 바이패스하는 런처 서브시스템입니다. */
     private final ActivityResultLauncher<Intent> galleryLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -173,7 +166,6 @@ public class MainActivity extends AppCompatActivity {
 
         btnInitialAddPlant = findViewById(R.id.btnInitialAddPlant);
 
-        // 2열 그리드 구조 레이아웃 매니저 주입 및 메모리 절약형 데이터 어댑터 연동
         myDisplayPlantList = new ArrayList<>();
         plantAdapter = new PlantAdapter(myDisplayPlantList);
         rvMyPlantList.setLayoutManager(new GridLayoutManager(this, 2));
@@ -188,9 +180,6 @@ public class MainActivity extends AppCompatActivity {
         btnMainLogout.setOnClickListener(v -> performAppLogout());
         btnMainDeleteAccount.setOnClickListener(v -> performAppDeleteAccount());
 
-        /**
-         * 프래그먼트 백스택 및 드로어 레이아웃 가시성 분기를 정밀 분석하는 최신 라이프사이클 백버튼 콜백 인터페이스입니다.
-         */
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -245,9 +234,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * 현 세션을 안전하게 종료 처리하고 스택 초기화 인텐트를 발동시키는 계정 로그아웃 프로시저입니다.
-     */
     public void performAppLogout() {
         mAuth.signOut();
         Toast.makeText(this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
@@ -258,10 +244,6 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    /**
-     * 클라우드 NoSQL 파이어스토어 데이터 원자적 배치(Batch) 처리 및
-     * SQLite 영구 청소, Firebase Auth 원격 유저 인스턴스를 무조건 소멸시키는 통합 회원탈퇴 트랜잭션 메서드입니다.
-     */
     public void performAppDeleteAccount() {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user == null) {
@@ -317,7 +299,6 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog deleteDialog = builder.create();
         deleteDialog.show();
 
-        // 머티리얼3 컴포넌트 테마 엇박자로 하얗게 차단된 텍스트 가시성을 회복하기 위한 동적 강제 색상 인젝션
         Button positiveButton = deleteDialog.getButton(AlertDialog.BUTTON_POSITIVE);
         Button negativeButton = deleteDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
 
@@ -392,17 +373,14 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog registerDialog = builder.create();
         registerDialog.show();
 
-        // 시스템 머티리얼3 테마가 하얗게 가려버린 버튼들을 직접 낚아챕니다.
         Button positiveButton = registerDialog.getButton(AlertDialog.BUTTON_POSITIVE);
         Button negativeButton = registerDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
 
         if (positiveButton != null) {
-            // [저장하기] 버튼은 앱의 메인 컨셉에 맞춰 선명하고 이쁜 진한 초록색(#2E7D32) 주입 및 글씨 굵게!
             positiveButton.setTextColor(Color.parseColor("#2E7D32"));
             positiveButton.setTypeface(null, android.graphics.Typeface.BOLD);
         }
         if (negativeButton != null) {
-            // [취소] 버튼은 명확한 가독성을 확보하기 위해 진한 회색(#616161) 주입!
             negativeButton.setTextColor(Color.parseColor("#616161"));
         }
     }
@@ -479,10 +457,6 @@ public class MainActivity extends AppCompatActivity {
         }).start();
     }
 
-    /**
-     * 작업자 스레드(Worker Thread) 풀에서 로컬 엔티티 리스트를 질의하고,
-     * 메인 렌더링 스레드로 바인딩하여 UI 중복 렌더링 현상을 제어하는 쿼리 핸들러입니다.
-     */
     private void loadPlantsFromLocalSQLite() {
         new Thread(() -> {
             String currentUserUid = mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : "anonymous";
@@ -511,10 +485,6 @@ public class MainActivity extends AppCompatActivity {
         }).start();
     }
 
-    /**
-     * 외부 클래스인 PlantSearch 바텀시트 모듈과 스레드 경계를 허물고 다이렉트로 결합하여
-     * 가상 ID 발행 및 클라우드 동기화를 동시 촉발시키는 반응형 커스텀 팝업 인터페이스입니다.
-     */
     public void showNameInputDialog(@Nullable Bitmap cameraBitmap, @Nullable Uri galleryUri) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("새 식물 등록하기");
@@ -585,17 +555,14 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog registerDialog = builder.create();
         registerDialog.show();
 
-        // 시스템 머티리얼3 테마가 하얗게 가려버린 버튼들을 직접 낚아챕니다.
         Button positiveButton = registerDialog.getButton(AlertDialog.BUTTON_POSITIVE);
         Button negativeButton = registerDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
 
         if (positiveButton != null) {
-            // [저장하기] 버튼은 앱의 메인 컨셉에 맞춰 선명하고 이쁜 진한 초록색(#2E7D32) 주입 및 글씨 굵게!
             positiveButton.setTextColor(Color.parseColor("#2E7D32"));
             positiveButton.setTypeface(null, android.graphics.Typeface.BOLD);
         }
         if (negativeButton != null) {
-            // [취소] 버튼은 명확한 가독성을 확보하기 위해 진한 회색(#616161) 주입!
             negativeButton.setTextColor(Color.parseColor("#616161"));
         }
     }
@@ -620,10 +587,6 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    /**
-     * Firebase Cloud NoSQL 서버 원격 도큐먼트를 리스닝하여 앱 기기 내부의
-     * 로컬 SQLite 데이터 무결성 정밀 동기화를 영방향으로 처리하는 네트워크 파이프라인 메서드입니다.
-     */
     private void syncWithFirebaseServer() {
         String currentUserUid = mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : null;
         if (currentUserUid == null) return;
@@ -690,10 +653,6 @@ public class MainActivity extends AppCompatActivity {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
     }
 
-    /**
-     * 비트맵 그래픽 리소스를 메모리 오버플로우(OOM)가 발생하지 않는 규격 내로 다운샘플링하고
-     * Google Gemini REST API 규격인 Base64 String 포맷 문자열로 고속 직렬화 인코딩하는 처리 함수입니다.
-     */
     private String encodeBitmapToBase64(Bitmap bitmap) {
         int maxSize = 800;
         int width = bitmap.getWidth();
@@ -762,10 +721,6 @@ public class MainActivity extends AppCompatActivity {
         sendOkHttpRequest(url, jsonRequestBody, false);
     }
 
-    /**
-     * OkHttp의 워커 스레드 풀 기반 비동기 엔큐(Enqueue) 네트워킹을 개시하고,
-     * 성공 파싱 데이터를 수집하여 메인 스레드 루퍼(Looper) 내부 UI 큐에 밀어 넣는 통신 엔진입니다.
-     */
     private void sendOkHttpRequest(String url, String jsonBody, boolean isFirstStepImageAnalysis) {
         RequestBody requestBody = RequestBody.create(jsonBody, MediaType.parse("application/json; charset=utf-8"));
         Request request = new Request.Builder().url(url).post(requestBody).build();

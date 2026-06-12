@@ -20,10 +20,6 @@ import androidx.annotation.Nullable;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
-/**
- * Google Gemini의 다중 비동기 분석 응답을 팝업형 바텀시트로 전개하는 UI 컴포넌트 클래스입니다.
- * 시트 가시 영역 확장 구조(Behavior Control) 및 상위 액티비티 컨텍스트 캐스팅을 이용한 입양 동기화 파이프라인을 탑재하고 있습니다.
- */
 public class PlantSearch {
 
     private final BottomSheetDialog dialog;
@@ -102,10 +98,6 @@ public class PlantSearch {
             }
         });
 
-        /**
-         * 바텀시트 내부에서 메인 도메인 액티비티로 식물 데이터를 인젝션하며 무결성 추가 팝업을 연동 호출하는 리스너 분기입니다.
-         * 시스템 다이얼로그 래핑 컨텍스트의 인스턴스를 MainActivity 규격으로 방어적 캐스팅하여 다이렉트 명령을 하달합니다.
-         */
         if (btnRegisterSearchedPlant != null) {
             btnRegisterSearchedPlant.setOnClickListener(v -> {
 
@@ -180,10 +172,6 @@ public class PlantSearch {
         if (dialog != null) dialog.show();
     }
 
-    /**
-     * Gemini 심층 토큰 텍스트 질의 수신 시, 시인성 확보를 위해 바텀시트 가시 윈도우 스케일을
-     * 디바이스 물리 화면 스펙 기준 70%에서 90%로 강제 트랜지션 확장하는 모듈식 최적화 함수입니다.
-     */
     public void expandBottomSheetHeight() {
         View bottomSheet = dialog.findViewById(com.google.android.material.R.id.design_bottom_sheet);
         if (bottomSheet != null) {
